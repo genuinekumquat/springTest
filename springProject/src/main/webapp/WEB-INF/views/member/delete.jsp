@@ -12,7 +12,7 @@
 //로그인 정보를 session에서 가져오기
 String id=(String)session.getAttribute("id");
 %>
-<form action="deletePro.me" method="post">
+<form action="${pageContext.request.contextPath}/member/deletePro" method="post">
 아이디 : 
 <input type="text" name="id" value="<%=id%>" readonly><br>
 비밀번호 : <input type="password" name="pass"><br>

@@ -22,9 +22,9 @@ if(id==null){
 %>
 <h1>member/main.jsp</h1>
 <%=id %>님 로그인 하셨습니다.<a href="logout.me">로그아웃</a><br>
-<a href="info.me">회원정보조회</a><br>
-<a href="update.me">회원정보수정</a><br>
-<a href="delete.me">회원정보삭제</a><br>
+<a href="${pageContext.request.contextPath}/member/info">회원정보조회</a><br>
+<a href="${pageContext.request.contextPath}/member/update">회원정보수정</a><br>
+<a href="${pageContext.request.contextPath}/member/delete">회원정보삭제</a><br>
 
 <%
 //세션값이 있으면

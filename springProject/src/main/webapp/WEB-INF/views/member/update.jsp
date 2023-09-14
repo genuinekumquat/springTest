@@ -1,8 +1,4 @@
-<%@page import="com.itwillbs.domain.MemberDTO"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,20 +30,19 @@
 // //5단계 : if  행 접근 -> 데이터 있으면 true 
 // //-> form 아이디 이름 출력
 // if(rs.next()){
-MemberDTO memberDTO=(MemberDTO)request.getAttribute("memberDTO");
+// MemberDTO memberDTO=(MemberDTO)request.getAttribute("memberDTO");
 	%>
-<form action="updatePro.me" method="post">
+<form action="${pageContext.request.contextPath}/member/updatePro" method="post">
 아이디 : <input type="text" name="id" 
-        value="<%=memberDTO.getId() %>" readonly><br>
+        value="<%//=memberDTO.getId() %>" readonly><br>
 비밀번호 : <input type="password" name="pass"><br>
 이름 : <input type="text" name="name" 
-        value="<%=memberDTO.getName()%>"><br>
+        value="<%//=memberDTO.getName()%>"><br>
 <input type="submit" value="회원정보수정">
 </form>	
 	<%
 // }
 %>
-
 </body>
 </html>
 

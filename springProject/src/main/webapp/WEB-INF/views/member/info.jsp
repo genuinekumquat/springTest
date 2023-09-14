@@ -1,8 +1,4 @@
-<%@page import="com.itwillbs.domain.MemberDTO"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -46,16 +42,16 @@
 // //     -> 아이디 비밀번호 이름 가입날짜 출력
 // if(rs.next()){
 	
-MemberDTO memberDTO=(MemberDTO)request.getAttribute("memberDTO");
+// MemberDTO memberDTO=(MemberDTO)request.getAttribute("memberDTO");
 	
 	%>
-아이디 : <%=memberDTO.getId() %><br>
-비밀번호 : <%=memberDTO.getPass() %><br>
-이름 : <%=memberDTO.getName() %><br>
-가입날짜 : <%=memberDTO.getDate() %><br>	
+아이디 : <%//=memberDTO.getId() %><br>
+비밀번호 : <%//=memberDTO.getPass() %><br>
+이름 : <%//=memberDTO.getName() %><br>
+가입날짜 : <%//=memberDTO.getDate() %><br>	
 	<%
 // }
 %>
-<a href="main.me">메인으로 이동</a>
+<a href="${pageContext.request.contextPath}/member/main">메인으로 이동</a>
 </body>
 </html>

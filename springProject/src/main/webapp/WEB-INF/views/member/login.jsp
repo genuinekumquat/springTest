@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>로그인</h1>
-<form action="loginPro.me" method="post">
+<form action="${pageContext.request.contextPath}/member/loginPro" method="post"><!-- 절대위치로 찾아가는 형태 -->
 아이디 : <input type="text" name="id"><br>
 비밀번호 : <input type="password" name="pass"><br>
 <input type="submit" value="로그인">
