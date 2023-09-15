@@ -42,13 +42,13 @@
 // //     -> 아이디 비밀번호 이름 가입날짜 출력
 // if(rs.next()){
 	
-// MemberDTO memberDTO=(MemberDTO)request.getAttribute("memberDTO");
+// MemberDTO memberDTO=(MemberDTO)request.getAttribute("memberDTO"); // model에 담아서 걍 가져옴 
 	
 	%>
-아이디 : <%//=memberDTO.getId() %><br>
-비밀번호 : <%//=memberDTO.getPass() %><br>
-이름 : <%//=memberDTO.getName() %><br>
-가입날짜 : <%//=memberDTO.getDate() %><br>	
+아이디 : ${memberDTO.id} <br>
+비밀번호 : ${memberDTO.pass} <br>
+이름 : ${memberDTO.name} <br>
+가입날짜  ${memberDTO.date} <br>	
 	<%
 // }
 %>

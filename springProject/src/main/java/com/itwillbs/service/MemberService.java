@@ -37,6 +37,31 @@ public class MemberService {  // @Inject가 @Service을 찾아감
 		memberDAO.insertMember(memberDTO);
 	}//insertMember()
 
+	public MemberDTO userCheck(MemberDTO memberDTO) {
+		System.out.println("MemberService userCheck()");
+		
+//		MemberDTO memberDTO2 = memberDAO.userChect(memberDTO);
+		
+		return memberDAO.userCheck(memberDTO);
+	}//userCheck
+
+	public MemberDTO getMember(String id) {
+		System.out.println("MemberService getMember()");
+		return memberDAO.getMember(id);
+	}//getMember
+
+	public void updateMember(MemberDTO memberDTO) {
+		System.out.println("MemberService updateMember()");
+		
+		memberDAO.updateMember(memberDTO);
+	}
+
+	public void deleteMember(MemberDTO memberDTO) {
+		System.out.println("MemberService deleteMember()");
+		
+		memberDAO.deleteMember(memberDTO);
+	}
+
 	
 
 }//class

@@ -39,4 +39,27 @@ public class MemberDAO {
 //		template.update(sql, memberDTO.getId(), memberDTO.getPass(), memberDTO.getName(), memberDTO.getDate());
 	}	// insertMember() 
 
+	public MemberDTO userCheck(MemberDTO memberDTO) {
+		System.out.println("MemberDAO userCheck()");
+		
+		return sqlSession.selectOne(namespace+".userCheck", memberDTO);
+	}//userCheck
+
+	public MemberDTO getMember(String id) {
+		System.out.println("MemberDAO getMember()");
+		return sqlSession.selectOne(namespace+".getMember", id);
+	}//getMember
+
+	public void updateMember(MemberDTO memberDTO) {
+		System.out.println("MemberDAO updateMember()");
+		
+		sqlSession.update(namespace+".updateMember", memberDTO);
+	}//updateMember
+
+	public void deleteMember(MemberDTO memberDTO) {
+		System.out.println("MemberDAO deleteMember()");
+		
+		sqlSession.delete(namespace+".deleteMember", memberDTO);
+	}//deleteMember
+
 }//

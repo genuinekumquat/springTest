@@ -5,9 +5,6 @@
   
 <mapper namespace="com.itwillbs.mappers.memberMapper">
 
-<!--   <select id="selectBlog" resultType="Blog"> -->
-<!--     select * from Blog where id = #{id} -->
-<!--   </select> -->
 
 <!--  물음표? 대신 memberDTO 멤버변수 이름 적어줌 #{}-->
   <insert id="insertMember">
@@ -15,4 +12,20 @@
   	values(#{id},#{pass},#{name},#{date})
   </insert>
   
+  <select id="userCheck" resultType="com.itwillbs.domain.MemberDTO">
+    select * from members where id = #{id} and pass = #{pass}
+  </select>
+  
+  <select id="getMember" resultType="com.itwillbs.domain.MemberDTO">
+    select * from members where id = #{id}
+  </select>
+  
+  <update id="updateMember">
+    update members set name=#{name} where id=#{id}
+  </update> 
+  
+  <delete id="deleteMember">
+   delete from members where id=#{id}
+  </delete>
+
 </mapper>

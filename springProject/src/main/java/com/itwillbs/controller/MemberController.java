@@ -2,8 +2,10 @@ package com.itwillbs.controller;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -101,18 +103,48 @@ public class MemberController {
 //	가상주소 http://localhost:8080/myweb/member/loginPro POST방식 
 //  -> 로그인 처리 -> 주소 변경되면서 이동 /member/main	
 	@RequestMapping(value = "/member/loginPro", method = RequestMethod.POST)
-	public String memberLoginPro() {
+	public String memberLoginPro(MemberDTO memberDTO, HttpSession session) {
 		System.out.println("MemberController memberLoginPro");
 		// 로그인 처리 
-		// 메인으로 이동 -> 주소 변경하면서 이동해야함 
-		//response.sendRedirect()
+		System.out.println("받은 아이디 : "+memberDTO.getId());
+		System.out.println("받은 비밀번호 : "+memberDTO.getPass());
+		
+		MemberDTO memberDTO2 = memberService.userCheck(memberDTO);
+		
+		if(memberDTO2!=null) {
+			// 아이디 비밀번호 일치 -> 세션값 생성 -> redirect:/member/main 이동
+			session.setAttribute("id", memberDTO.getId());
+			// 메인으로 이동 -> 주소 변경하면서 이동해야함 
+			//response.sendRedirect()
+			return "redirect:/member/main";
+		} else {
+			// 아이디 비밀번호 틀림 => member/msg.jsp
+			return "member/msg";
+		}
+	}//
+
+//	가상주소 http://localhost:8080/myweb/member/info 
+//  주소변경없이 이동 member/info.jsp
+	@RequestMapping(value = "/member/logout", method = RequestMethod.GET)//하이퍼링크는 전부 get방식 
+	public String logout(HttpSession session) {
+		// 로그아웃 
+		session.invalidate();
+		// WEB-INF/views/member/info.jsp
 		return "redirect:/member/main";
 	}//
 	
 //	가상주소 http://localhost:8080/myweb/member/info 
 //  주소변경없이 이동 member/info.jsp
 	@RequestMapping(value = "/member/info", method = RequestMethod.GET)//하이퍼링크는 전부 get방식 
-	public String memberInfo() {
+	public String memberInfo(HttpSession session, Model model) {
+		// 세션값 가져오기 -> String id에 저장 
+		String id = (String) session.getAttribute("id");
+		// DB에 id에 대한 정보를 가져오기 
+		MemberDTO memberDTO = memberService.getMember(id);
+		// 가져온 데이터 담아서 info.jsp로 이동 
+		//request.setAttribute("memberDTO",memberDTO);
+		//request에 안담고 대신 Model model에 데이터를 담아서 info.jsp에 가서 바로 사용 
+		model.addAttribute("memberDTO", memberDTO);
 		// member/info.jsp
 		// WEB-INF/views/member/info.jsp
 		return "member/info";
@@ -121,22 +153,40 @@ public class MemberController {
 //	가상주소 http://localhost:8080/myweb/member/update 
 //  주소변경없이 이동 member/update.jsp
 	@RequestMapping(value = "/member/update", method = RequestMethod.GET)
-	public String memberUpdate() {
+	public String memberUpdate(HttpSession session, Model model) {
+		// 수정하기전에 수정할정보 먼저 부려줌
+		// 세션값 가져오기 -> String id에 저장 
+		String id = (String) session.getAttribute("id");
+		// DB에 id에 대한 정보를 가져오기 수정할정보 먼저 부려줌-> 새로만들필요없이 getMember쓰기
+		MemberDTO memberDTO = memberService.getMember(id);	
+		//request에 안담고 대신 Model model에 데이터를 담아서 info.jsp에 가서 바로 사용 
+		model.addAttribute("memberDTO", memberDTO);		
 		// member/update.jsp
 		// WEB-INF/views/member/update.jsp
 		return "member/update";
-	}//
+	}//memberUpdate
 
 //	가상주소 http://localhost:8080/myweb/member/updatePro 
 //  수정 -> 주소변경 이동 ->"redirect:/member/main";
 	@RequestMapping(value = "/member/updatePro", method = RequestMethod.POST)//폼태그에서 넘어오는거는 post
-	public String memberUpdatePro() {
+	public String memberUpdatePro(MemberDTO memberDTO) {
 		System.out.println("MemberController memberUpdatePro");
 		// 회원정보수정 처리 
-		// 멤버인포 -> 주소 변경하면서 이동해야함 
-		//response.sendRedirect()
-		return "redirect:/member/main";
-	}//	
+		// memberDTO toString 처리 -> memberDTO라는 주소값 출력하면 멤버변수 내용 나오도록 
+		System.out.println(memberDTO); 
+		MemberDTO memberDTO2 = memberService.userCheck(memberDTO); // memberDTO2는 들고가는게아녀
+		
+		if(memberDTO2!=null) {
+			// 아이디패스 일치하면 
+		    // 멤버인포 -> 주소 변경하면서 이동해야함 
+			memberService.updateMember(memberDTO);
+		    //response.sendRedirect()
+		 return "redirect:/member/main";			
+		}else{
+			// 아이디패스 일치안하면
+			return "member/msg";			
+		}
+	}//	memberUpdatePro
 	
 //	가상주소 http://localhost:8080/myweb/member/delete 
 //  주소변경없이 이동 member/delete.jsp
@@ -147,17 +197,29 @@ public class MemberController {
 		return "member/delete";
 	}//
 	
-	
 //	가상주소 http://localhost:8080/myweb/member/deletePro 
 //  삭제 -> 주소변경 이동 ->"redirect:/member/main";
 	@RequestMapping(value = "/member/deletePro", method = RequestMethod.POST)//폼태그에서 넘어오는거는 post
-	public String memberDeletePro() {
+	public String memberDeletePro(MemberDTO memberDTO, HttpSession session) {
 		System.out.println("MemberController memberDeletePro");
 		// 회원정보삭제 처리 
-		// 멤버딜리트 -> 주소 변경하면서 이동해야함 
-		//response.sendRedirect()
-		return "redirect:/member/main";
-	}//	
+		// memberDTO 출력
+		System.out.println(memberDTO);
+		// MemberDTO memberDTO2 = userCheck() 호출
+		MemberDTO memberDTO2 = memberService.userCheck(memberDTO);
+		// memberDTO2 != null; -> 아이디패스 일치 -> 삭제(deleteMember(memberDTO)) -> 세션초기화 -> 메인으로 이동 
+		if (memberDTO2!=null) {
+			memberService.deleteMember(memberDTO);
+			session.invalidate();
+			System.out.println(memberDTO);
+			// 멤버딜리트 -> 주소 변경하면서 이동해야함 
+			//response.sendRedirect()
+			return "redirect:/member/main";
+		} else {
+			// memberDTO2 == null; -> 아이디패스 불일치 -> member/msg.jsp 
+			return "member/msg";	
+		}	
+	}//	memberDeletePro
 	
 //	가상주소 http://localhost:8080/myweb/member/main
 //	-> member 폴더의 main.jsp 로 이동 	

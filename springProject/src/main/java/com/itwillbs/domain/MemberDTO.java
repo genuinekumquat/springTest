@@ -11,6 +11,11 @@ public class MemberDTO {
 	private String name;
 	private Timestamp date;
 	
+	
+	@Override
+	public String toString() {
+		return "MemberDTO [id=" + id + ", pass=" + pass + ", name=" + name + ", date=" + date + "]";
+	}
 	// alt shift s -> r
 	public String getId() {
 		return id;

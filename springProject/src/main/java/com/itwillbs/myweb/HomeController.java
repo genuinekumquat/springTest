@@ -28,21 +28,21 @@ public class HomeController {
   //                  -> 메서드 자동으로 동작
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		// 로그출력 System.out.println();
-		logger.info("Welcome home! The client locale is {}.", locale);
-		// 자바 날짜 객체생성
-		Date date = new Date();
-		// 자바 날짜 -> 문자열 변경하는 객체생성
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		// 문자열 변경된 내용을 변수에 저장
-		String formattedDate = dateFormat.format(date);
-		
-//		3) request.setAttribute("이름",값) ->  model 데이터를 담아서 jsp 이동
-		model.addAttribute("serverTime", formattedDate );
-		
+//		// 로그출력 System.out.println();
+//		logger.info("Welcome home! The client locale is {}.", locale);
+//		// 자바 날짜 객체생성
+//		Date date = new Date();
+//		// 자바 날짜 -> 문자열 변경하는 객체생성
+//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+//		// 문자열 변경된 내용을 변수에 저장
+//		String formattedDate = dateFormat.format(date);
+//		
+////		3) request.setAttribute("이름",값) ->  model 데이터를 담아서 jsp 이동
+//		model.addAttribute("serverTime", formattedDate );
+//		
 		//4) WEB-INF/views/파일이름.jsp
 		//WEB-INF/views/home.jsp => 이동
-		return "home";
+		return "redirect:/member/main";
 	}//메서드
 	
 
