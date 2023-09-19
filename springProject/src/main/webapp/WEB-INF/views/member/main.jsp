@@ -27,6 +27,7 @@
 	<c:redirect url="/member/login"></c:redirect>
 </c:if>
 <h1>member/main.jsp</h1>
+<img src="${pageContext.request.contextPath}/resources/1.jpg"><br>
 ${sessionScope.id}님 로그인 하셨습니다.
 <a href="${pageContext.request.contextPath}/member/logout">로그아웃</a><br>
 <a href="${pageContext.request.contextPath}/member/info">회원정보조회</a><br>
@@ -40,14 +41,19 @@ ${sessionScope.id}님 로그인 하셨습니다.
 	// equals() 문자열 비교 => 기억장소 안에 값을 비교 일치하면 => true
 	 //if(id.equals("admin")){
 		%>
-<a href="list.me">회원정보목록</a><br>		
+<%-- <a href="${pageContext.request.contextPath}/member/list">회원정보목록</a><br>		 --%>
 		<% 
 //	 }
 //}
 %>
+<c:if test="${!(empty sessionScope.id)}">
+	<c:if test="${sessionScope.id eq'admin'}">
+<a href="${pageContext.request.contextPath}/member/list">회원정보목록</a><br>			
+	</c:if>
+</c:if>
 
-<a href="write.bo">게시판 글쓰기</a><br>
-<a href="list.bo">게시판 글목록</a><br>
+<a href="${pageContext.request.contextPath}/board/write">게시판 글쓰기</a><br>
+<a href="${pageContext.request.contextPath}/board/list">게시판 글목록</a><br>
 
 </body>
 </html>

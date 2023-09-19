@@ -1,5 +1,7 @@
 package com.itwillbs.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -220,6 +222,21 @@ public class MemberController {
 			return "member/msg";	
 		}	
 	}//	memberDeletePro
+	
+//	가상주소 http://localhost:8080/myweb/member/list 
+//  주소변경없이 이동 member/list.jsp
+	@RequestMapping(value = "/member/list", method = RequestMethod.GET)//하이퍼링크는 전부 get방식 
+	public String memberList(HttpSession session,Model model) {
+		// DB에 회원 정보를 가져오기 
+		List<MemberDTO> memberList = memberService.getMemberList();
+		// 가져온 데이터 담아서 list.jsp로 이동 
+		//request.setAttribute("memberDTO",memberDTO);
+		//request에 안담고 대신 Model model에 데이터를 담아서 list.jsp에 가서 바로 사용 
+		model.addAttribute("memberList", memberList);
+		// member/list.jsp
+		// WEB-INF/views/member/list.jsp
+		return "member/list";
+	}//
 	
 //	가상주소 http://localhost:8080/myweb/member/main
 //	-> member 폴더의 main.jsp 로 이동 	

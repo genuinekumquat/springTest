@@ -1,6 +1,7 @@
 package com.itwillbs.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,7 +61,13 @@ public class MemberService {  // @Inject가 @Service을 찾아감
 		System.out.println("MemberService deleteMember()");
 		
 		memberDAO.deleteMember(memberDTO);
-	}
+	}// getMemberList
+
+	public List<MemberDTO> getMemberList() {
+		System.out.println("MemberService getMemberList()");
+		
+		return memberDAO.getMemberList();
+	}//getMemberList
 
 	
 

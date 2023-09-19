@@ -1,5 +1,7 @@
 package com.itwillbs.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
@@ -61,5 +63,12 @@ public class MemberDAO {
 		
 		sqlSession.delete(namespace+".deleteMember", memberDTO);
 	}//deleteMember
+
+	public List<MemberDTO> getMemberList() {
+		System.out.println("MemberDAO deleteMember()");
+		// TODO Auto-generated method stub
+		
+		return sqlSession.selectList(namespace+".getMemberList");
+	}//getMemberList
 
 }//
