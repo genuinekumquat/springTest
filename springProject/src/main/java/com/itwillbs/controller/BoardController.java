@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.itwillbs.domain.BoardDTO;
+import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.service.BoardService;
 
@@ -84,4 +86,61 @@ public class BoardController {
 		return "board/list";
 	}//
 	
+	//http://localhost:8080/myweb/board/content?num=num
+	@RequestMapping(value = "/board/content", method = RequestMethod.GET)//하이퍼링크는 전부 get방식 
+//	public String boardContent(HttpServletRequest request, Model model) {
+	public String Content(BoardDTO boardDTO, Model model) {
+		
+//		int num = Integer.parseInt(request.getParameter("num")); 
+//		BoardDTO boardDTO = boardService.getBoard(num);
+		
+		// num값 게시물 조회수증가
+		boardService.updateReadcount(boardDTO.getNum());
+		
+		// num값 게시물 가져오기
+		boardDTO = boardService.getBoard(boardDTO.getNum());
+		
+		model.addAttribute("boardDTO", boardDTO);
+		// board/content.jsp	
+		// WEB-INF/views/board/content.jsp
+		return "board/content";
+	}//
+
+	//http://localhost:8080/myweb/board/update?num=num
+	@RequestMapping(value = "/board/update", method = RequestMethod.GET) 
+//	public String boardUpdate(HttpServletRequest request, Model model) {
+	public String Update(BoardDTO boardDTO, Model model) {
+				
+		// num값 게시물 가져오기
+		boardDTO = boardService.getBoard(boardDTO.getNum());
+		
+		model.addAttribute("boardDTO", boardDTO);
+		// board/content.jsp	
+		// WEB-INF/views/board/update.jsp
+		return "board/update";
+	}//	
+	
+	//	http://localhost:8080/myweb/board/updatePro    POST방식
+	@RequestMapping(value = "/board/updatePro", method = RequestMethod.POST)
+	public String UpdatePro(BoardDTO boardDTO) {
+		// request => num name subject content 저장되어 있음 =>BoardDTO
+		System.out.println("BoardController updatePro()");
+		System.out.println(boardDTO);
+		// num값 게시물 수정
+		boardService.updateBoard(boardDTO);
+		
+		// updateBoard(boardDTO) 수정
+		// redirect:/board/list 이동	
+		return "redirect:/board/list";	
+	}// 
+	
+	//	http://localhost:8080/myweb/board/delete
+	@RequestMapping(value = "/board/delete", method = RequestMethod.GET)
+	public String delete(BoardDTO boardDTO) {
+
+		boardService.deleteBoard(boardDTO);
+		
+		return "redirect:/board/list";	
+	}//	
+		
 }// 클래스 

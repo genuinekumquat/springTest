@@ -1,4 +1,4 @@
-<%@page import="com.itwillbs.domain.BoardDTO"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
 <body>
 <%
 //세션에서 로그인정보 가져오기
-String id=(String)session.getAttribute("id");
+//String id=(String)session.getAttribute("id");
 // // update.jsp?num=1
 // // num=1 사용자가 선택한 정보를 http가 들고와서 서버에 request 에 저장
 // // request num 가져와서 -> int num 변수에 저장
@@ -32,18 +32,18 @@ String id=(String)session.getAttribute("id");
 // //5단계 : if  행 접근 -> 데이터 있으면 true 
 // //     -> 글번호 글쓴이 글제목 글내용 출력
 // if(rs.next()){
-	BoardDTO boardDTO = (BoardDTO)request.getAttribute("boardDTO");
+//	BoardDTO boardDTO = (BoardDTO)request.getAttribute("boardDTO");
 	%>
-	<h1>글수정(로그인 : <%=id %>)</h1>
-<form action="updatePro.bo" method="post">
-<input type="hidden" name="num" value="<%=boardDTO.getNum()%>">
+	<h1>글수정(로그인 : ${sessionScope.id})</h1>
+<form action="${pageContext.request.contextPath}/board/updatePro" method="post">
+<input type="hidden" name="num" value="${boardDTO.num}">
 <table border="1">
 <tr><td>글쓴이</td>
-<td><input type="text" name="name" value="<%=boardDTO.getName()%>" readonly></td></tr>
+<td><input type="text" name="name" value="${boardDTO.name}" readonly></td></tr>
 <tr><td>글제목</td>
-    <td><input type="text" name="subject" value="<%=boardDTO.getSubject()%>"></td></tr>
+    <td><input type="text" name="subject" value="${boardDTO.subject}"></td></tr>
 <tr><td>글내용</td>
-<td><textarea name="content" rows="10" cols="20"><%=boardDTO.getContent() %></textarea></td></tr>
+<td><textarea name="content" rows="10" cols="20">${boardDTO.content}</textarea></td></tr>
 <tr><td colspan="2"><input type="submit" value="글수정"></td></tr>    
 </table>
 </form>

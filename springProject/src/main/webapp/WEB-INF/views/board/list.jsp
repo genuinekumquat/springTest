@@ -55,7 +55,7 @@
     <c:forEach var="boardDTO" items="${boardList}">
     <tr><td>${boardDTO.num}</td>
     <td>${boardDTO.name}</td>
-    <td><a href="content.bo?num=${boardDTO.num}">${boardDTO.subject}</a></td>
+    <td> <a href="${pageContext.request.contextPath}/board/content?num=${boardDTO.num }">${boardDTO.subject}</a></td>
     <td>${boardDTO.readcount}</td>
     <td>${boardDTO.date}</td></tr> 	 
     </c:forEach>

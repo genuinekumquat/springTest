@@ -26,6 +26,7 @@ public class BoardDAO {
 
 	public void insertBoard(BoardDTO boardDTO) {
 		System.out.println("BoardDAO insertBoard()");
+		
 		sqlSession.insert(namespace+".insertBoard",boardDTO);
 	}//insertBoard
 
@@ -40,6 +41,30 @@ public class BoardDAO {
 		
 		return sqlSession.selectOne(namespace+".getBoardCount");
 	}//getBoardCount
-
 	
+	
+	public BoardDTO getBoard(int num) {
+		System.out.println("BoardDAO getBoard()");
+		
+		return sqlSession.selectOne(namespace+".getBoard", num);
+	}//getBoardCount
+
+	public void updateReadcount(int num) {
+		System.out.println("BoardDAO updateReadcount()");
+		
+		sqlSession.update(namespace+".updateReadcount", num);
+	}//updateReadcount
+
+	public void updateBoard(BoardDTO boardDTO) {
+		System.out.println("BoardDAO updateBoard()");
+		
+		sqlSession.update(namespace+".updateBoard", boardDTO);
+	}//updateBoard
+
+	public void deleteBoard(BoardDTO boardDTO) {
+		System.out.println("BoardDAO deleteBoard()");
+		
+		sqlSession.delete(namespace+".deleteBoard",boardDTO);
+	}//deleteBoard
+
 }//클래스
