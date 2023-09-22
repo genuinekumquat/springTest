@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -134,9 +135,11 @@ public class BoardController {
 		return "redirect:/board/list";	
 	}// 
 	
-	//	http://localhost:8080/myweb/board/delete
-	@RequestMapping(value = "/board/delete", method = RequestMethod.GET)
+	//	http://localhost:8080/myweb/board/delete?num=num
+//	@RequestMapping(value = "/board/delete", method = RequestMethod.GET)
+	@GetMapping("/board/delete")// request get 방식일때 겟매핑 바로해도된다
 	public String delete(BoardDTO boardDTO) {
+		System.out.println(boardDTO.getNum());
 
 		boardService.deleteBoard(boardDTO);
 		
